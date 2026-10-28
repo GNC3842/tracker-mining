@@ -1,0 +1,20 @@
+# Données volumineuses ou régénérables
+data/raw/
+data/interim/
+/crawl_*.jsonl*
+results_pilot/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+build/
+dist/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
