@@ -1,0 +1,112 @@
+% =====================================================================
+%  IT4868E Web Mining - Capstone Project Report
+%  Compile: latexmk -xelatex report.tex   (or: xelatex, bibtex, xelatex, xelatex)
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{fontspec} % Latin Modern (supports Vietnamese diacritics)
+\usepackage[a4paper,margin=2.4cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,tabularx,multirow,array}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage[skins,breakable]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{microtype}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
+\usepackage[capitalise,noabbrev]{cleveref}
+
+% draft helpers
+\definecolor{todoframe}{RGB}{214,120,0}
+\newcommand{\todo}[1]{{\color{todoframe}\textbf{[TODO:} #1\textbf{]}}}
+\newcommand{\tbd}{{\color{todoframe}\textbf{TBD}}}
+\newtcolorbox{pending}[1][]{colback=orange!6,colframe=todoframe,coltitle=white,boxrule=0.6pt,
+  arc=2pt,left=6pt,right=6pt,top=4pt,bottom=4pt,title={#1},fonttitle=\bfseries\small,breakable}
+
+% math 
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\DeclareMathOperator{\regd}{reg}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\FP}{FP}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\one}{\mathbf{1}}
+
+% header
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small IT4868E Web Mining --- Capstone Report}
+\rhead{\small\color{todoframe}Draft v0.1 --- 28 Oct 2026}
+\cfoot{\thepage}
+\setlength{\headheight}{14pt}
+
+\title{\textbf{Mining the Third-Party Web in Vietnam:\\
+Tracker Ecosystem Discovery via Inclusion-Graph Analysis}\\[6pt]
+\large IT4868E Web Mining --- Capstone Project Report (Method type)\\
+\normalsize Topic area: Link Analysis}
+\author{Baumelou Paul Marie Hadrien 20260145S \and Nguyen Dao Minh Huy 20260104S \\[4pt]
+\small Hanoi University of Science and Technology (HUST), semester 2026-1}
+
+\begin{document}
+\maketitle
+
+%abstract
+\begin{abstract}
+Visiting a web page silently triggers requests to dozens of third parties, many of which load
+further third parties, forming \emph{inclusion chains} through which user data flows.
+Public tracker knowledge bases are compiled from Western vantage points: DuckDuckGo Tracker Radar,
+the reference used here, covers nine regions, none of them in Asia. We study the third-party
+ecosystem of the Vietnamese web as a \emph{link-analysis} problem. We crawl the 7\,665 most
+visited websites in Vietnam (Chrome UX Report country list) with an instrumented headless browser
+that records, for every request, the script or document that initiated it. From these logs we
+build a domain-level inclusion graph (who loads whom, weighted by the number of sites) and a
+co-occurrence graph, and apply the methods of the course---PageRank, HITS, community detection,
+node2vec and graph convolutional networks---to (T1) classify unlisted third-party domains as
+trackers, (T2) recover their owning organisations, and (T3) mine tracker co-deployment rules.
+\end{abstract}
+
+% INTRODUCTION
+
+\section{Introduction}\label{sec:intro}
+
+A modern web page is an aggregate of resources served by many organisations. A news site may
+embed a tag manager, which injects an analytics library, which in turn sends identifiers to an
+advertising exchange, which redirects to further partners. The site owner explicitly includes
+only the first link of this chain; every subsequent party is trusted \emph{implicitly}
+\cite{ikram2019chain}. Measuring this ecosystem matters for privacy (who receives user data),
+security (each inclusion is an attack surface \cite{kumar2017tangled,arshad2016include}) and
+regulation.
+
+Large-scale measurements \cite{englehardt2016online} and curated knowledge bases
+(Tracker Radar \cite{trackerradar}, EasyPrivacy \cite{easyprivacy}) describe the Western
+web well. Tracker Radar, however, is crawled from nine regions (AU, CA, CH, DE, FR, GB, NL, NO,
+US), none in Asia (\cref{sec:data}). Domains that are specific to the Vietnamese advertising
+market can therefore be absent from these lists.
+
+\paragraph{Why link analysis.} The syllabus restricts capstone topics to Link Analysis, Opinion
+Mining and Recommendation Systems (Information Retrieval excluded). Our object of study is a
+\emph{graph}: nodes are third-party domains, and a directed edge $u\to v$ states that $u$ caused
+the browser to fetch $v$. This graph plays the role that hyperlinks play in classical link
+analysis: a domain loaded by many central loaders is ``important'' in the same sense as a page
+cited by authoritative pages. Request URLs are used only as \emph{node attributes}; the project
+contains no query processing or document retrieval.
+
+\paragraph{Research questions.}
+\begin{description}[leftmargin=1.2cm,labelwidth=1cm,font=\normalfont\bfseries]
+  \item[RQ1] How deep and how concentrated is third-party inclusion on the Vietnamese web? Does a
+  graph-based ranking (PageRank, HITS) differ from simple prevalence counting?
+  \item[RQ2] Can the inclusion and co-occurrence structure, combined with request features,
+  identify trackers that are absent from Western lists (T1)?
+  \item[RQ3] Does community structure recover the organisations that own the domains (T2)?
+  \item[RQ4] Which trackers are systematically co-deployed (T3), and how does prevalence differ
+  from the global reference?
+\end{description}
