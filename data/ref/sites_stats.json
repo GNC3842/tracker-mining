@@ -1,0 +1,54 @@
+{
+  "origins_in_rank_window": 10000,
+  "excluded_adult_keyword": 602,
+  "unique_registrable_domains": 7781,
+  "share_vn_suffix": 0.2101,
+  "buckets": {
+    "1000": 780,
+    "5000": 3151,
+    "10000": 3850
+  },
+  "pilot_size": 200,
+  "top_suffixes": [
+    [
+      "com",
+      3053
+    ],
+    [
+      "vn",
+      954
+    ],
+    [
+      "net",
+      387
+    ],
+    [
+      "com.vn",
+      303
+    ],
+    [
+      "edu.vn",
+      261
+    ],
+    [
+      "org",
+      151
+    ],
+    [
+      "me",
+      94
+    ],
+    [
+      "io",
+      93
+    ],
+    [
+      "gov.vn",
+      87
+    ],
+    [
+      "co",
+      80
+    ]
+  ]
+}
