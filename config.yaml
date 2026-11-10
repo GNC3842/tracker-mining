@@ -1,2 +1,42 @@
-#Contient toues les règles et parametres du projet
+# Tous les paramètres du projet. Chemins relatifs à la racine du dépôt.
+# Un chiffre publié dans le rapport doit venir d'ici, pas d'une constante cachée
+# dans le code : chaque résultat JSON recopie cette configuration.
 
+seed: 42
+
+paths:
+  ref: data/ref                    # versionné : listes de sites, données de référence
+  raw: data/raw                    # non versionné : sorties du crawler (*.jsonl)
+  interim: data/interim            # non versionné : tables Parquet, matrices .npz
+  results: results                 # versionné : métriques JSON
+
+ref:
+  sites_top: data/ref/sites_top.txt
+  sites_pilot: data/ref/sites_pilot.txt
+  tracker_radar_index: data/ref/tracker_radar_index.json
+  easyprivacy: data/ref/easyprivacy.txt
+
+crawl:
+  shards: 4                        # nb de lots pour le crawl complet
+  concurrency: 4
+  timeout_s: 30
+  wait_after_load_s: 6
+
+tables:
+  min_requests_usable: 2           # document principal + au moins 1 sous-ressource
+
+resolve:
+  # CDN de bibliothèques JS dont les cadres sont sautés quand on cherche le script
+  # responsable d'une requête. Commenté = liste par défaut de tm/parse/resolve.py.
+  # library_hosts: [code.jquery.com, cdnjs.cloudflare.com, cdn.jsdelivr.net]
+
+graph:
+  # G_co : arête (u, v) si Jaccard >= jaccard_min et |S_u ∩ S_v| >= co_min.
+  # co_min >= 2 car deux domaines vus ensemble sur un seul site ont Jaccard = 1.
+  jaccard_min: 0.1
+  co_min: 2
+
+rank:
+  damping: 0.85
+  tol: 1.0e-10                     # arrêt quand ||R_k - R_{k-1}||_1 < tol
+  max_iter: 1000

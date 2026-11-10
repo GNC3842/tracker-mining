@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "tracker-mining"
 version = "0.1.0"
@@ -6,12 +10,10 @@ requires-python = ">=3.10"
 # Bornes basses = versions testées dans l'environnement de développement.
 dependencies = [
     "playwright>=1.56",
-    "psutil>=7.0",
     "tldextract>=5.4",
     "networkx>=3.4",
     "scipy>=1.14",
     "numpy>=2.0",
-    "scikit-learn>=1.6",
     "pandas>=2.2",
     "pyarrow>=18",
     "pyyaml>=6.0",
