@@ -1,6 +1,10 @@
-  """Usage : python -m tm.tools.build_tr_index <chemin/tracker-radar> data/ref/tracker_radar_index.json
-  """
+"""
+Construit l'index compact de Tracker Radar (domaine -> catégories, propriétaire),
+union des 9 régions, depuis un clone de duckduckgo/tracker-radar. L'index est
+versionné dans data/ref/ : inutile de garder le clone (~1 Go).
 
+Usage : python -m tm.tools.build_tracker_radar_index <chemin/tracker-radar> data/ref/tracker_radar_index.json
+"""
 
 import json
 import sys
