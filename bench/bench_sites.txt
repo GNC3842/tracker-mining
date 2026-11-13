@@ -1,0 +1,3 @@
+http://news-bench.vn:8765/	1000	news-bench.vn
+http://cf-bench.vn:8765/	1000	cf-bench.vn
+http://slow-bench.vn:8765/	1000	slow-bench.vn
