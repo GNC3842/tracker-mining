@@ -1,0 +1,54 @@
+{
+  "n_sites": 200,
+  "status": {
+    "error": 12,
+    "ok": 125,
+    "timeout": 42,
+    "http_error": 21
+  },
+  "challenge": 30,
+  "usable": 104,
+  "success_rate": 0.52,
+  "tp_requests": 5923,
+  "parent_method": {
+    "init_url": 1590,
+    "stack": 3579,
+    "redirect": 663,
+    "fallback": 90,
+    "none": 1
+  },
+  "initiator_resolution_rate": 0.985,
+  "tp_domains": 407,
+  "tp_site_pairs": 893,
+  "depth_hist_pairs": {
+    "1": 417,
+    "2": 289,
+    "3": 115,
+    "4": 72
+  },
+  "share_pairs_depth_ge2": 0.533,
+  "share_domains_any_depth_ge2": 0.553,
+  "share_domains_majority_depth_ge2": 0.516,
+  "graph_tp_nodes": 273,
+  "graph_tp_edges": 801,
+  "spearman_pagerank_vs_prevalence": 0.485,
+  "labels": {
+    "unknown": 111,
+    "uncategorized": 118,
+    "tracking": 118,
+    "non_tracking": 38,
+    "ambiguous": 22
+  },
+  "labeled": 156,
+  "labeled_full_crawl_estimate": 1339,
+  "share_domains_absent_from_tr": 0.273,
+  "entities_observed": 151,
+  "entities_ge2_domains": 34,
+  "cmp_site_rate": 0.038,
+  "tp_cookie_site_rate": 0.433,
+  "duration_median_s": 10.16,
+  "duration_p90_s": 37.6,
+  "jsonl_kb_per_site": 105.8,
+  "estimated_hours_full_crawl": 5.4,
+  "easyprivacy_rules_loaded": 46995
+}
