@@ -1,5 +1,6 @@
 # Raccourcis du pipeline. Sans make (Windows), lancer la commande python indiquée.
-PY     ?= python
+# On prend le python du venv s'il existe (sinon le package tm n'est pas trouvé).
+PY     ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python)
 CFG    ?= config.yaml
 K      ?= 4
 SHARD  ?= 0
