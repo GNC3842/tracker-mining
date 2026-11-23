@@ -4,12 +4,17 @@ data/interim/
 /crawl_*.jsonl*
 results_pilot/
 
+# Clones de sources externes (régénérables)
+/easylist/
+/tracker-radar/
+
 # Python
 __pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
 .venv/
+venv/
 build/
 dist/
 
